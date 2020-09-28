@@ -118,10 +118,12 @@ public class Controller implements Initializable {
                                 nickname = str.split(" ", 2)[1];
                                 setAuthenticated(true);
                                 //===============//
-                                File history = new File("/history.txt"); // ссылка на файл
+                                /*File history = new File("/history.txt"); // ссылка на файл
                                 if (!history.exists()) { // если файл истории нет создай его
                                     history.createNewFile();
                                     }
+
+                                 */
                                 loadHistory ();
                                 //=============//
                                 break;
@@ -165,7 +167,7 @@ public class Controller implements Initializable {
                                 textArea.appendText(str + "\n");
 
                                 //============//
-                                SaveHistory ();
+                                //loadHistory ();
                             }
                         }
                     } catch (RuntimeException e) {
@@ -173,6 +175,12 @@ public class Controller implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     } finally {
+                        //============//
+                        try {
+                            SaveHistory ();
+                        } catch (IOException e) {
+                            e.printStackTrace ();
+                        }
                         System.out.println("Мы отключились от сервера");
                         setAuthenticated(false);
                         try {
@@ -266,7 +274,7 @@ public class Controller implements Initializable {
 
     private void SaveHistory() throws IOException {
         try {
-            File history = new File("/history.txt"); // ссылка на файл
+            File history = new File("history.txt"); // ссылка на файл
             if (!history.exists()) { // если файл истории нет создай его
                 history.createNewFile();
             }
@@ -283,7 +291,7 @@ public class Controller implements Initializable {
 
     private void loadHistory() throws IOException { // загрузка истории
         int posHistory = 100; // 100 строк
-        File history = new File("/history.txt"); // ссылка на файл
+        File history = new File("history.txt"); // ссылка на файл
         List<String> historyList = new ArrayList<> (); // лист
         FileInputStream in = new FileInputStream(history);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
@@ -299,7 +307,7 @@ public class Controller implements Initializable {
             }
         } else {
             for (int i = 0; i < posHistory; i++) {
-                System.out.println(historyList.get(i));
+                //System.out.println(historyList.get(i));
             }
         }
     }
